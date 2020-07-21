@@ -1,0 +1,7 @@
+- `cp .env.dist .env`
+- `sudo apt-get install php-sqlite3`
+- `bin/console doctrine:database:create`
+- `php bin/console doctrine:migrations:migrate --no-interaction`
+- `wget https://get.symfony.com/cli/installer -O - | bash`
+- `PHP 7.2`
+- ``
