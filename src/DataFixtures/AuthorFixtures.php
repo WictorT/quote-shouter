@@ -10,7 +10,7 @@ class AuthorFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
-         $author = (new Author)
+        $author = (new Author)
             ->setName('Steve Jobs')
             ->setSlug('steve-jobs');
 

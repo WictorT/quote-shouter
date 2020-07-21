@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Author;
 use App\Entity\Quote;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -17,5 +18,15 @@ class QuoteRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Quote::class);
+    }
+
+    public function getQuotesForAuthor(Author $author, int $limit)
+    {
+        return $this->createQueryBuilder('q')
+            ->andWhere('q.authorId = :authorId')
+            ->setParameter('authorId', $author->getId())
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
     }
 }
