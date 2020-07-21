@@ -39,7 +39,7 @@ class QuoteFixtures extends Fixture implements DependentFixtureInterface
 
         $manager->persist(
             (new Quote)
-                ->setOriginal('Your time is limited, so don’t waste it living someone else’s life.')
+                ->setOriginal('Your time is limited, so don’t waste it living someone else’s life!')
                 ->setAuthorId($authorId)
         );
 
