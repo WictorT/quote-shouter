@@ -27,6 +27,11 @@ class Quote
      */
     private $authorId;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="quotes")
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,5 +59,10 @@ class Quote
         $this->authorId = $authorId;
 
         return $this;
+    }
+
+    public function getAuthor(): ?Author
+    {
+        return $this->author;
     }
 }
