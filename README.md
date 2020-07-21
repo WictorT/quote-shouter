@@ -4,4 +4,4 @@
 - `php bin/console doctrine:migrations:migrate --no-interaction`
 - `wget https://get.symfony.com/cli/installer -O - | bash`
 - `PHP 7.2`
-- ``
+- `cp phpunit.xml.dist phpunit.xml`

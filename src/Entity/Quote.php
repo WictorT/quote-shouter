@@ -20,7 +20,7 @@ class Quote
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $content;
+    private $original;
 
     /**
      * @ORM\Column(type="integer")
@@ -32,14 +32,14 @@ class Quote
         return $this->id;
     }
 
-    public function getContent(): ?string
+    public function getOriginal(): ?string
     {
-        return $this->content;
+        return $this->original;
     }
 
-    public function setContent(string $content): self
+    public function setOriginal(string $original): self
     {
-        $this->content = $content;
+        $this->original = $original;
 
         return $this;
     }
