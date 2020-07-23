@@ -32,8 +32,5 @@ The given example will return 2 famous quotes from Steve Jobs:
     - Then you can access http://127.0.0.1:8000/shout/steve-jobs?limit=2 in your browser.
 
 ### Launching tests
-- To launch tests tests run: `cp phpunit.xml.dist phpunit.xml`, and adjust to your preferences, then:
-```
-bin/phpunit
-```
+- To launch tests tests run: `cp phpunit.xml.dist phpunit.xml`, and adjust to your preferences, then `bin/phpunit`.
 <h2 align="center"> Thank you! </h2>
