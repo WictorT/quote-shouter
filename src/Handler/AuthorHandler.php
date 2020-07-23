@@ -48,6 +48,8 @@ class AuthorHandler
         if (!$newAuthor) {
             throw new NotFoundHttpException('Author not found.');
         }
+
+        return $newAuthor;
     }
 
     private function getAuthorFromResponse(stdClass $response, string $slug): ?Author

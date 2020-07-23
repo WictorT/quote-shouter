@@ -23,7 +23,7 @@ class Quote
     private $original;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="quotes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="quotes", cascade={"remove"})
      */
     private $author;
 
