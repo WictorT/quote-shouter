@@ -23,11 +23,6 @@ class Quote
     private $original;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $authorId;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Author", inversedBy="quotes")
      */
     private $author;
@@ -49,20 +44,15 @@ class Quote
         return $this;
     }
 
-    public function getAuthorId(): ?int
-    {
-        return $this->authorId;
-    }
-
-    public function setAuthorId(int $authorId): self
-    {
-        $this->authorId = $authorId;
-
-        return $this;
-    }
-
-    public function getAuthor(): ?Author
+    public function getAuthor(): Author
     {
         return $this->author;
+    }
+
+    public function setAuthor(Author $author): self
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

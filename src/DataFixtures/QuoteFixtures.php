@@ -27,20 +27,19 @@ class QuoteFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-        $authorId = $this->authorRepository
-            ->findOneBy(['slug' => 'steve-jobs'])
-            ->getId();
+        $author = $this->authorRepository
+            ->findOneBy(['slug' => 'steve-jobs']);
 
         $manager->persist(
             (new Quote)
                 ->setOriginal('The only way to do great work is to love what you do.')
-                ->setAuthorId($authorId)
+                ->setAuthor($author)
         );
 
         $manager->persist(
             (new Quote)
                 ->setOriginal('Your time is limited, so don’t waste it living someone else’s life!')
-                ->setAuthorId($authorId)
+                ->setAuthor($author)
         );
 
         $manager->flush();

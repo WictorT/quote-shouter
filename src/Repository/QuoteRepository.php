@@ -23,8 +23,8 @@ class QuoteRepository extends ServiceEntityRepository
     public function getQuotesForAuthor(Author $author, int $limit)
     {
         return $this->createQueryBuilder('q')
-            ->andWhere('q.authorId = :authorId')
-            ->setParameter('authorId', $author->getId())
+            ->andWhere('q.author = :author')
+            ->setParameter('author', $author->getId())
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
