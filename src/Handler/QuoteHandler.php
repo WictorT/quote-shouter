@@ -5,25 +5,70 @@ namespace App\Handler;
 
 
 use App\Entity\Author;
+use App\Entity\Quote;
 use App\Repository\QuoteRepository;
+use App\Service\TheySaidSoClient;
+use Doctrine\ORM\EntityManagerInterface;
+use stdClass;
 
 class QuoteHandler
 {
-    /** @var QuoteRepository */
+    /** @var EntityManagerInterface */
+    private $entityManager;
+
+    /** @var Author */
     private $quoteRepository;
 
-    public function __construct(QuoteRepository $quoteRepository)
-    {
+    /** @var TheySaidSoClient */
+    private $theySaidSoClient;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        QuoteRepository $quoteRepository,
+        TheySaidSoClient $theySaidSoClient
+    ) {
+        $this->entityManager = $entityManager;
         $this->quoteRepository = $quoteRepository;
+        $this->theySaidSoClient = $theySaidSoClient;
     }
 
     public function getAuthorQuotes(Author $author, int $limit)
     {
-        $quotes = $this->quoteRepository->getQuotesForAuthor($author, $limit);
-        if (!$quotes) {
-
+        $quotesFromDB = $this->quoteRepository->getQuotesForAuthor($author, $limit);
+        if ($quotesFromDB) {
+            return $quotesFromDB;
         }
 
-        return $quotes;
+        $quotesFromAPI = $this->theySaidSoClient->getQuotesForAuthor($author);
+
+        if ($quotesFromAPI) {
+            return $this->getQuotesFromResponse($quotesFromAPI, $author);
+        }
+
+        return [];
+    }
+
+    private function getQuotesFromResponse(stdClass $response, Author $author): array
+    {
+        $quotesFromAPI = $response->contents->quotes;
+        if (!$quotesFromAPI) {
+            return [];
+        }
+
+        $newQuotes = [];
+        foreach ($quotesFromAPI as $quote) {
+            $newQuote = (new Quote)
+                ->setAuthor($author)
+                ->setOriginal($quote->quote);
+            $newQuotes[] = $newQuote;
+
+            $this->entityManager->persist($newQuote);
+        }
+
+        if ($newQuotes) {
+            $this->entityManager->flush();
+        }
+
+        return $newQuotes;
     }
 }

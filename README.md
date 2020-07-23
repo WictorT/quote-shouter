@@ -1,6 +1,6 @@
 - `cp .env.dist .env`
 - `cp phpunit.xml.dist phpunit.xml`
-- `sudo apt-get install php-sqlite3 php7.2-cli php7.2-xml php7.2-mbstring composer`
+- `sudo apt-get install php-sqlite3 php7.2-cli php7.2-xml php7.2-mbstring php7.2-curl composer`
 - `wget https://get.symfony.com/cli/installer -O - | bash`
 
 - `composer install`
@@ -10,3 +10,6 @@
 - `cp phpunit.xml.dist phpunit.xml`
 
 - To run tests: `/bin/phpunit`
+
+- To try the app run: `bin/console app:call-route /shout/steve-jobs?limit=2`
+- And for JSON format: `bin/console app:call-route /shout/steve-jobs?limit=2 -f json`

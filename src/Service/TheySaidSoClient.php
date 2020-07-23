@@ -5,20 +5,40 @@ namespace App\Service;
 
 
 use App\Entity\Author;
+use Symfony\Component\HttpFoundation\Request;
+use function curl_init;
+use function json_decode;
+use function rawurlencode;
 
 class TheySaidSoClient
 {
     public function getQuotesForAuthor(Author $author)
     {
-        $this->call();
+        return json_decode(
+            $this->call(
+                Request::METHOD_GET,
+                '/quote/search?limit=10&author=' . rawurlencode($author->getName())
+            )
+        );
+
     }
 
-    private function call($method, $url, $data = false)
+    public function searchAuthors(string $slug)
+    {
+        return json_decode(
+            $this->call(
+                Request::METHOD_GET,
+                '/quote/authors/search?query=' . $slug
+            )
+        );
+    }
+
+    private function call($method, $route, $data = false)
     {
         $curl = curl_init();
+        $url = $_ENV['THEY_SAID_SO_CLIENT_API_URL'] . $route;
 
-        switch ($method)
-        {
+        switch ($method) {
             case "POST":
                 curl_setopt($curl, CURLOPT_POST, 1);
 
@@ -37,7 +57,7 @@ class TheySaidSoClient
             'Content-Type: application/json'
         ];
 
-        $apiKey = getenv('THEY_SAID_SO_CLIENT_API_KEY');
+        $apiKey = $_ENV['THEY_SAID_SO_CLIENT_API_KEY'];
         if (!empty($apiKey)) {
             $headers[] = 'X-TheySaidSo-Api-Secret: ' . $apiKey;
         }
